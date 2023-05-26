@@ -7,29 +7,43 @@ let removeButtons = []
 let markAsReadButtons = []
 let myLibrary = [];
 
-function Book(title,author,pages){
-    this.title = title
-    this.author = author
-    this.pages = pages
+
+class Book{
+    constructor(title,author,pages){
+        this._title = title
+        this._author = author
+        this._pages = pages
+    }
+
+    get title() {
+        return this._title
+    }
+
+    get author() {
+        return this._author
+    }
+
+    get pages() {
+        return this._pages
+    }
 }
 
 
 
-function addBookToLibrary(title,author,pages){
+
+function addBookToLibrary(book){
     
 
-    let currentBook = new Book(title,author,pages)
-    myLibrary.push(currentBook)
+
+    myLibrary.push(book)
     let bookDiv = document.createElement('div')
     bookDiv.classList.add("book")
-    writeBookInfo(title,author,pages,bookDiv)
+    writeBookInfo(book,bookDiv)
     bookContainer.appendChild(bookDiv)
-
-    bookDiv.childNodes
 
 
 }
-function writeBookInfo(title,author,pages,bookDiv){
+function writeBookInfo(book,bookDiv){
 
     const info = document.createElement('div')
     const bookOptions = document.createElement('div')
@@ -44,9 +58,9 @@ function writeBookInfo(title,author,pages,bookDiv){
     info.appendChild(authorName)
     info.appendChild(pageCount)
 
-    pageCount.innerHTML =  pages
-    authorName.innerHTML = author
-    titleName.innerHTML =  title
+    pageCount.innerHTML =  book.pages
+    authorName.innerHTML = book.author
+    titleName.innerHTML =  book.title
   
 
     let readButton = document.createElement('button')
@@ -60,8 +74,6 @@ function writeBookInfo(title,author,pages,bookDiv){
     bookOptions.appendChild(readButton)
     bookOptions.appendChild(removeButton)
 
-    // removeButtons.push(readButton)
-    // markAsReadButtons.push(removeButton)
 
     bookDiv.appendChild(info)
     bookDiv.appendChild(bookOptions)
@@ -100,10 +112,10 @@ function writeBookInfo(title,author,pages,bookDiv){
 
 addButton.addEventListener('click', (e) => {
     e.preventDefault()
-    let bookInput = document.querySelector('#title').value
+    let titleInput = document.querySelector('#title').value
     let authorInput = document.querySelector('#author').value
 
-    addBookToLibrary(bookInput,authorInput,310)
+    addBookToLibrary(new Book(titleInput,authorInput,300))
 })
 
 
